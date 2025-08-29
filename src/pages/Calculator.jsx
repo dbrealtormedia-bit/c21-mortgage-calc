@@ -24,6 +24,7 @@ const C21 = {
 const fmt = (n) => Number(n ?? 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
 const fmt2 = (n) => Number(n ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // kept for tests
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+const toInt = (v) => Math.max(0, Math.round(Number(v || 0)));
 const dollars0 = (n) => "$" + fmt(n);
 const dollars2 = (n) => "$" + fmt2(n); // kept for tests
 
@@ -88,6 +89,13 @@ export default function MortgageCalculatorLanding() {
   // County + Program
   const [county, setCounty] = useState("Polk");
   const [program, setProgram] = useState("Conventional");
+  const fixedDownByProgram = { Conventional: 5, FHA: 3.5, VA: 0, USDA: 0 };
+
+// When program changes, force the matching down %
+React.useEffect(() => {
+  setDownPct(fixedDownByProgram[program]);
+}, [program]);
+
 
   // Keep down payment locked to program selection
   useEffect(() => {
