@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --c21-gold:#b99861;
+  --c21-gold-2:#beaf87;
+  --c21-dark-gold:#a19276;
+  --c21-light-gold:#f1ebdf;
+  --c21-white:#ffffff;
+  --c21-light-grey:#e6e7e8;
+  --c21-med-grey:#808285;
+  --c21-obs-grey:#252526;
+  --c21-ink:#121212;
+}
