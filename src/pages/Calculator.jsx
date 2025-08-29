@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
-import { Info, Calculator, Layers, AlertTriangle, RefreshCcw, Home, TrendingUp, MapPin, Lock } from "lucide-react";
+import { Info, Calculator, Layers, DollarSign, AlertTriangle } from "lucide-react";
 
 // ---------------------- Century 21 palette (from your brand list) ----------------------
 const C21 = {
@@ -258,7 +258,7 @@ React.useEffect(() => {
     return { price, dpPct, ir, loan, pi, mi, escrows, total, upfront };
   }
 
-  const results = [0, 1, 2].map(scenarioResult);
+const results = [scenarioRest(0)]ul;
 
   function applyCountyDefaults() {
     const p = countyPresets[county];
@@ -465,52 +465,6 @@ React.useEffect(() => {
                 </Tabs>
               </CardContent>
             </Card>
-
-            {/* Scenarios */}
-            <Card className="rounded-3xl shadow-lg border border-black/5" style={panelBg}>
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl" style={{ color: C21.ink }}>
-                  <RefreshCcw className="h-6 w-6" style={{ color: C21.gold }}/>
-                  {t("scenarios")}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  {scenarios.map((s) => (
-                    <div key={s.id} className="p-4 rounded-xl border" style={{ background: C21.lightGold, borderColor: C21.lightGrey }}>
-                      <h4 className="font-semibold text-sm mb-3" style={{ color: C21.ink }}>{s.name} Scenario</h4>
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">{t("priceDelta")}</Label>
-                          <Input type="number" value={s.priceDelta} onChange={(e) => {
-                            const v = Number(e.target.value || 0);
-                            setScenarios(prev => prev.map(x => x.id === s.id ? { ...x, priceDelta: v } : x));
-                          }} className="text-sm"/>
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">{t("rateDelta")}</Label>
-                          <Input type="number" step="0.01" value={s.rateDelta} onChange={(e) => {
-                            const v = Number(e.target.value || 0);
-                            setScenarios(prev => prev.map(x => x.id === s.id ? { ...x, rateDelta: v } : x));
-                          }} className="text-sm"/>
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">{t("downDelta")}</Label>
-                          <Input type="number" step="0.1" value={s.downPctDelta} onChange={(e) => {
-                            const v = Number(e.target.value || 0);
-                            setScenarios(prev => prev.map(x => x.id === s.id ? { ...x, downPctDelta: v } : x));
-                          }} className="text-sm"/>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <Button variant="secondary" className="w-full rounded-xl" onClick={resetScenarios} style={{ borderColor: C21.lightGrey }}>
-                    {t("reset")}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
 
           {/* Results */}
           <div className="space-y-6">
