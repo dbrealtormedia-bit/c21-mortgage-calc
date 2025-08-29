@@ -96,12 +96,6 @@ React.useEffect(() => {
   setDownPct(fixedDownByProgram[program]);
 }, [program]);
 
-
-  // Keep down payment locked to program selection
-  useEffect(() => {
-    setDownPct(LOCKED_DOWN_BY_PROGRAM[program] ?? 0);
-  }, [program]);
-
   // Scenarios (same county + program, named like your version)
   const [scenarios, setScenarios] = useState([
     { id: 1, priceDelta: 0, rateDelta: 0, downPctDelta: 0, name: "Current" },
