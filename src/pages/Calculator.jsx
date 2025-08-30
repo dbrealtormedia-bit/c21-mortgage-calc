@@ -105,9 +105,9 @@ React.useEffect(() => {
 
   // County presets (fills taxes/insurance only; user can override)
   const countyPresets = {
-    Polk: { taxes: 0.0118 * homePrice, insurance: 2600, description: "Rural charm, growing cities" },
-    Osceola: { taxes: 0.0128 * homePrice, insurance: 2800, description: "Close to theme parks" },
-    Orange: { taxes: 0.0142 * homePrice, insurance: 3100, description: "Urban center, Disney area" },
+    Polk: { taxes: 0.0118 * homePrice, insurance: 1700, description: "Rural charm, growing cities" },
+    Osceola: { taxes: 0.0128 * homePrice, insurance: 1900, description: "Close to theme parks" },
+    Orange: { taxes: 0.0142 * homePrice, insurance: 2100, description: "Urban center, Disney area" },
   };
 
   // Program notes (EN/ES)
@@ -258,7 +258,7 @@ React.useEffect(() => {
     return { price, dpPct, ir, loan, pi, mi, escrows, total, upfront };
   }
 
-const results = [scenarioRest(0)]ul;
+const results = [scenarioResult(0)];
 
   function applyCountyDefaults() {
     const p = countyPresets[county];
@@ -472,9 +472,9 @@ const results = [scenarioRest(0)]ul;
               <Card key={i} className="rounded-3xl shadow-lg border border-black/5" style={panelBg}>
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center justify-between">
-                    <span className="text-lg" style={{ color: C21.ink }}>{scenarios[i].name}</span>
+                    <span className="text-lg" style={{ color: C21.ink }}>{t("monthly")}</span>
                     <span className="text-2xl font-bold" style={{ color: C21.gold }}>{dollars0(r.total)}</span>
-                  </CardTitle>
+                 </CardTitle>
                   <p className="text-sm" style={{ color: C21.medGrey }}>{t("monthly")}</p>
                 </CardHeader>
                 <CardContent className="grid gap-3">
