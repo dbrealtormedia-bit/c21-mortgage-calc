@@ -529,6 +529,7 @@ const results = [scenarioResult(0)];
               </Card>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
