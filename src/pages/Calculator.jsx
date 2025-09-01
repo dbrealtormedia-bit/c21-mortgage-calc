@@ -349,88 +349,148 @@ const results = [scenarioResult(0)];
                 {t("inputs")}
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="space-y-2">
-                <Label className="font-semibold">{t("price")}</Label>
-                <Input type="number" value={homePrice} onChange={(e) => setHomePrice(Number(e.target.value || 0))} className="text-lg font-semibold"/>
-              </div>
+<CardContent className="grid gap-4">
+  {/* Home Price */}
+  <div className="space-y-2">
+    <Label className="font-semibold">{t("price")}</Label>
+    <Input
+      type="number"
+      value={homePrice}
+      onChange={(e) => setHomePrice(Number(e.target.value || 0))}
+      className="text-lg font-semibold"
+    />
+  </div>
 
-              <div className="space-y-2">
-                <Label className="font-semibold flex items-center gap-2">
-                  {t("down")} 
-                  <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style={{ background: C21.lightGrey, color: C21.ink }}>
-                    <Lock className="h-3 w-3"/> {t("lockedAt")} {fmt(LOCKED_DOWN_BY_PROGRAM[program])}%
-                  </span>
-                  <span className="text-sm font-normal ml-2" style={{ color: C21.medGrey }}>
-                    {"(" + dollars0((downPct / 100) * homePrice) + ")"}
-                  </span>
-                </Label>
-                <Input type="number" step="0.1" value={downPct} disabled className="text-lg font-semibold bg-gray-100 cursor-not-allowed"/>
-              </div>
+  {/* Down Payment (%) – editable */}
+  <div className="space-y-2">
+    <Label className="font-semibold flex items-center gap-2">
+      {t("down")}
+      <span className="text-sm font-normal ml-2" style={{ color: C21.medGrey }}>
+        {"(" + dollars0((downPct / 100) * homePrice) + ")"}
+      </span>
+    </Label>
+    <Input
+      type="number"
+      step="0.1"
+      value={downPct}
+      onChange={(e) => setDownPct(clamp(Number(e.target.value || 0), 0, 100))}
+      className="text-lg font-semibold"
+    />
+  </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="font-semibold">{t("rate")}</Label>
-                  <Input type="number" step="0.01" value={rate} onChange={(e) => setRate(Number(e.target.value || 0))} className="font-semibold"/>
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-semibold">{t("term")}</Label>
-                  <Input type="number" value={termYears} onChange={(e) => setTermYears(Number(e.target.value || 0))} className="font-semibold"/>
-                </div>
-              </div>
+  {/* Rate & Term */}
+  <div className="grid grid-cols-2 gap-4">
+    <div className="space-y-2">
+      <Label className="font-semibold">{t("rate")}</Label>
+      <Input
+        type="number"
+        step="0.01"
+        value={rate}
+        onChange={(e) => setRate(Number(e.target.value || 0))}
+        className="font-semibold"
+      />
+    </div>
+    <div className="space-y-2">
+      <Label className="font-semibold">{t("term")}</Label>
+      <Input
+        type="number"
+        value={termYears}
+        onChange={(e) => setTermYears(Number(e.target.value || 0))}
+        className="font-semibold"
+      />
+    </div>
+  </div>
 
-              <div className="space-y-3">
-                <Label className="font-semibold flex items-center gap-2">
-                  <MapPin className="h-4 w-4" style={{ color: C21.gold }}/>
-                  {t("county")}
-                </Label>
-                <select className="w-full h-12 rounded-xl border-2 bg-white px-4 text-lg font-semibold focus:outline-none" style={{ borderColor: C21.lightGrey }} value={county} onChange={(e) => setCounty(e.target.value)}>
-                  {Object.entries(countyPresets).map(([key, value]) => (
-                    <option key={key} value={key}>
-                      {key} County - {value.description}
-                    </option>
-                  ))}
-                </select>
-                <Button type="button" className="w-full font-semibold" style={{ background: C21.gold, color: C21.ink }} onClick={applyCountyDefaults}>
-                  {t("applyCounty")}
-                </Button>
-              </div>
+  {/* County + Apply */}
+  <div className="space-y-3">
+    <Label className="font-semibold flex items-center gap-2">
+      <MapPin className="h-4 w-4" style={{ color: C21.gold }} />
+      {t("county")}
+    </Label>
+    <select
+      className="w-full h-12 rounded-xl border-2 bg-white px-4 text-lg font-semibold focus:outline-none"
+      style={{ borderColor: C21.lightGrey }}
+      value={county}
+      onChange={(e) => setCounty(e.target.value)}
+    >
+      {Object.entries(countyPresets).map(([key, value]) => (
+        <option key={key} value={key}>
+          {key} County - {value.description}
+        </option>
+      ))}
+    </select>
+    <Button
+      type="button"
+      className="w-full font-semibold"
+      style={{ background: C21.gold, color: C21.ink }}
+      onClick={applyCountyDefaults}
+    >
+      {t("applyCounty")}
+    </Button>
+  </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="font-semibold">{t("taxes")}</Label>
-                  <Input type="number" value={annualTaxes} onChange={(e) => setAnnualTaxes(Number(e.target.value || 0))}/>
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-semibold">{t("insurance")}</Label>
-                  <Input type="number" value={annualInsurance} onChange={(e) => setAnnualInsurance(Number(e.target.value || 0))}/>
-                </div>
-              </div>
+  {/* Taxes & Insurance */}
+  <div className="grid grid-cols-2 gap-4">
+    <div className="space-y-2">
+      <Label className="font-semibold">{t("taxes")}</Label>
+      <Input
+        type="number"
+        value={annualTaxes}
+        onChange={(e) => setAnnualTaxes(Number(e.target.value || 0))}
+      />
+    </div>
+    <div className="space-y-2">
+      <Label className="font-semibold">{t("insurance")}</Label>
+      <Input
+        type="number"
+        value={annualInsurance}
+        onChange={(e) => setAnnualInsurance(Number(e.target.value || 0))}
+      />
+    </div>
+  </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="font-semibold">{t("hoa")}</Label>
-                  <Input type="number" value={monthlyHOA} onChange={(e) => setMonthlyHOA(Number(e.target.value || 0))}/>
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-semibold">{t("cdd")}</Label>
-                  <Input type="number" value={monthlyCDD} onChange={(e) => setMonthlyCDD(Number(e.target.value || 0))}/>
-                </div>
-              </div>
+  {/* HOA & CDD */}
+  <div className="grid grid-cols-2 gap-4">
+    <div className="space-y-2">
+      <Label className="font-semibold">{t("hoa")}</Label>
+      <Input
+        type="number"
+        value={monthlyHOA}
+        onChange={(e) => setMonthlyHOA(Number(e.target.value || 0))}
+      />
+    </div>
+    <div className="space-y-2">
+      <Label className="font-semibold">{t("cdd")}</Label>
+      <Input
+        type="number"
+        value={monthlyCDD}
+        onChange={(e) => setMonthlyCDD(Number(e.target.value || 0))}
+      />
+    </div>
+  </div>
 
-              <div className="space-y-2">
-                <Label className="font-semibold" style={{ color: C21.ink }}>{t("budget")}</Label>
-                <Input type="number" value={budget} onChange={(e) => setBudget(Number(e.target.value || 0))} className="text-lg font-semibold"/>
-              </div>
+  {/* Budget */}
+  <div className="space-y-2">
+    <Label className="font-semibold" style={{ color: C21.ink }}>
+      {t("budget")}
+    </Label>
+    <Input
+      type="number"
+      value={budget}
+      onChange={(e) => setBudget(Number(e.target.value || 0))}
+      className="text-lg font-semibold"
+    />
+  </div>
 
-              <div className="pt-2">
-                <p className="text-xs flex gap-2 items-start" style={{ color: C21.medGrey }}>
-                  <Info className="h-4 w-4 shrink-0 mt-0.5" style={{ color: C21.gold }}/> 
-                  {t("disclaimer")}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+  {/* Disclaimer */}
+  <div className="pt-2">
+    <p className="text-xs flex gap-2 items-start" style={{ color: C21.medGrey }}>
+      <Info className="h-4 w-4 shrink-0 mt-0.5" style={{ color: C21.gold }} />
+      {t("disclaimer")}
+    </p>
+  </div>
+</CardContent>
+       </Card>
 
           {/* Programs & Scenarios */}
           <div className="space-y-6">
